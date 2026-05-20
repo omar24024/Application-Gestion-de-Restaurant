@@ -39,6 +39,19 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
     _fetchPlats();
   }
 
+  Future<String?> _uploadImage(Uint8List bytes) async {
+    try {
+      final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+      await _supabase.storage
+          .from('plats-images')
+          .uploadBinary(fileName, bytes,
+              fileOptions: const FileOptions(contentType: 'image/jpeg'));
+      return _supabase.storage.from('plats-images').getPublicUrl(fileName);
+    } catch (e) {
+      return null;
+    }
+  }
+
   void _showForm({Map<String, dynamic>? plat}) {
     final nomCtrl = TextEditingController(text: plat?['nom'] ?? '');
     final descCtrl = TextEditingController(text: plat?['description'] ?? '');
@@ -64,7 +77,6 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                 Text(plat == null ? 'Ajouter un plat' : 'Modifier le plat',
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
-
                 // Image picker
                 GestureDetector(
                   onTap: () async {
@@ -73,29 +85,9 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                         source: ImageSource.gallery, imageQuality: 70);
                     if (picked != null) {
                       final bytes = await picked.readAsBytes();
-                      setModalState(() {
-                        imageBytes = bytes;
-                        uploading = true;
-                      });
-
-                      try {
-                        final fileName =
-                            '${DateTime.now().millisecondsSinceEpoch}.jpg';
-                        await _supabase.storage
-                            .from('plats-images')
-                            .uploadBinary(fileName, bytes,
-                                fileOptions: const FileOptions(
-                                    contentType: 'image/jpeg'));
-                        final url = _supabase.storage
-                            .from('plats-images')
-                            .getPublicUrl(fileName);
-                        setModalState(() {
-                          imageUrl = url;
-                          uploading = false;
-                        });
-                      } catch (e) {
-                        setModalState(() => uploading = false);
-                      }
+                      setModalState(() { imageBytes = bytes; uploading = true; });
+                      final url = await _uploadImage(bytes);
+                      setModalState(() { imageUrl = url; uploading = false; });
                     }
                   },
                   child: Container(
@@ -104,21 +96,45 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                     decoration: BoxDecoration(
                       color: Colors.orange.shade50,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.orange),
+                      border: Border.all(color: Colors.orange, width: 2),
                     ),
                     child: uploading
                         ? const Center(child: CircularProgressIndicator(color: Colors.orange))
                         : imageBytes != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: Image.memory(imageBytes!, fit: BoxFit.cover))
+                            ? Stack(children: [
+                                ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.memory(imageBytes!,
+                                        width: double.infinity, fit: BoxFit.cover)),
+                                Positioned(
+                                  top: 8, right: 8,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: const BoxDecoration(
+                                        color: Colors.orange, shape: BoxShape.circle),
+                                    child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                                  ),
+                                ),
+                              ])
                             : imageUrl != null
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(12),
-                                    child: Image.network(imageUrl!, fit: BoxFit.cover,
-                                        errorBuilder: (_, __, ___) => const Icon(
-                                            Icons.add_photo_alternate,
-                                            color: Colors.orange, size: 50)))
+                                ? Stack(children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Image.network(imageUrl!,
+                                            width: double.infinity, fit: BoxFit.cover,
+                                            errorBuilder: (_, __, ___) => const Icon(
+                                                Icons.add_photo_alternate,
+                                                color: Colors.orange, size: 50))),
+                                    Positioned(
+                                      top: 8, right: 8,
+                                      child: Container(
+                                        padding: const EdgeInsets.all(4),
+                                        decoration: const BoxDecoration(
+                                            color: Colors.orange, shape: BoxShape.circle),
+                                        child: const Icon(Icons.edit, color: Colors.white, size: 16),
+                                      ),
+                                    ),
+                                  ])
                                 : const Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -132,24 +148,15 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                   ),
                 ),
                 const SizedBox(height: 12),
-
-                TextField(
-                    controller: nomCtrl,
-                    decoration: const InputDecoration(
-                        labelText: 'Nom du plat', border: OutlineInputBorder())),
+                TextField(controller: nomCtrl,
+                    decoration: const InputDecoration(labelText: 'Nom du plat', border: OutlineInputBorder())),
                 const SizedBox(height: 12),
-                TextField(
-                    controller: descCtrl,
-                    decoration: const InputDecoration(
-                        labelText: 'Description', border: OutlineInputBorder())),
+                TextField(controller: descCtrl,
+                    decoration: const InputDecoration(labelText: 'Description', border: OutlineInputBorder())),
                 const SizedBox(height: 12),
-                TextField(
-                    controller: prixCtrl,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                        labelText: 'Prix (DA)', border: OutlineInputBorder())),
+                TextField(controller: prixCtrl, keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(labelText: 'Prix (DA)', border: OutlineInputBorder())),
                 const SizedBox(height: 16),
-
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -209,32 +216,36 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                     final plat = plats[index];
                     return Card(
                       margin: const EdgeInsets.only(bottom: 10),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       child: ListTile(
-                        leading: plat['image_url'] != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(plat['image_url'],
-                                    width: 50, height: 50, fit: BoxFit.cover,
-                                    errorBuilder: (_, __, ___) => const CircleAvatar(
-                                        backgroundColor: Colors.orange,
-                                        child: Icon(Icons.fastfood, color: Colors.white))))
-                            : const CircleAvatar(
-                                backgroundColor: Colors.orange,
-                                child: Icon(Icons.fastfood, color: Colors.white)),
+                        leading: SizedBox(
+                          width: 55, height: 55,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: plat['image_url'] != null
+                                ? Image.network(
+                                    plat['image_url'],
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (_, __, ___) => Container(
+                                        color: Colors.orange.shade50,
+                                        child: const Icon(Icons.fastfood, color: Colors.orange)),
+                                  )
+                                : Container(
+                                    color: Colors.orange.shade50,
+                                    child: const Icon(Icons.fastfood, color: Colors.orange)),
+                          ),
+                        ),
                         title: Text(plat['nom'],
                             style: const TextStyle(fontWeight: FontWeight.bold)),
                         subtitle: Text('${plat['prix']} DA',
-                            style: const TextStyle(color: Colors.orange)),
+                            style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Switch(
                               value: plat['disponible'] ?? true,
                               activeColor: Colors.green,
-                              onChanged: (_) =>
-                                  _toggleDisponible(plat['id'], plat['disponible']),
+                              onChanged: (_) => _toggleDisponible(plat['id'], plat['disponible']),
                             ),
                             IconButton(
                               icon: const Icon(Icons.edit, color: Colors.blue),
@@ -248,14 +259,10 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                                   title: const Text('Supprimer ?'),
                                   content: Text('Supprimer "${plat['nom']}" ?'),
                                   actions: [
-                                    TextButton(
-                                        onPressed: () => Navigator.pop(context),
+                                    TextButton(onPressed: () => Navigator.pop(context),
                                         child: const Text('Annuler')),
                                     TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          _deletePlat(plat['id']);
-                                        },
+                                        onPressed: () { Navigator.pop(context); _deletePlat(plat['id']); },
                                         child: const Text('Supprimer',
                                             style: TextStyle(color: Colors.red))),
                                   ],
