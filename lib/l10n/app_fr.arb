@@ -37,5 +37,68 @@
   "locationNotAvailable": "GPS non disponible",
   "payOnDelivery": "Paiement à la livraison",
   "gpsSent": "GPS sera envoyé",
-  "accountCreated": "Compte créé ! Connectez-vous."
+  "accountCreated": "Compte créé ! Connectez-vous.",
+  "addDish": "Ajouter un plat",
+  "editDish": "Modifier le plat",
+  "tapToChooseImage": "Appuyer pour choisir une image",
+  "dishName": "Nom du plat",
+  "description": "Description",
+  "priceDA": "Prix (DA)",
+  "add": "Ajouter",
+  "edit": "Modifier",
+  "menuManagement": "Gestion du menu",
+  "noDishesAddSome": "Aucun plat — ajoutez-en !",
+  "deleteQuestion": "Supprimer ?",
+  "deleteConfirm": "Supprimer \"{name}\" ?",
+  "@deleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "delete": "Supprimer",
+  "orderDetails": "Détails Commande #",
+  "deliveryInformation": "Informations de livraison",
+  "positionNotAvailable": "Position non disponible",
+  "orderedItems": "Articles commandés",
+  "noItems": "Aucun article",
+  "unknownDish": "Plat inconnu",
+  "quantity": "Quantité:",
+  "history": "Historique",
+  "pendingOrders": "Commandes en attente",
+  "all": "Toutes",
+  "accepted": "Acceptées",
+  "refused": "Refusées",
+  "noOrdersInHistory": "Aucune commande",
+  "noPendingOrders": "Aucune commande en attente",
+  "acceptedStatus": "Acceptée",
+  "refusedStatus": "Refusée",
+  "pendingStatus": "En attente",
+  "unknown": "Inconnu",
+  "gpsAvailable": "GPS disponible",
+  "statistics": "Statistiques",
+  "totalRevenue": "Revenu total",
+  "totalOrders": "Total commandes",
+  "dashboardRestaurant": "Dashboard Restaurant",
+  "welcome": "Bienvenue !",
+  "restaurant": "Restaurant",
+  "pending": "En attente",
+  "acceptedOrders": "Acceptées",
+  "orderHistory": "Historique des commandes",
+  "acceptedAndRefused": "Acceptées et refusées",
+  "manageMenu": "Gestion du menu",
+  "addEditDeleteDishes": "Ajouter, modifier, supprimer des plats",
+  "revenueAndOrders": "Revenus et commandes",
+  "newOrders": "{count} nouvelle(s) commande(s)",
+  "@newOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "noDishAvailable": "Aucun plat disponible",
+  "gpsLocationWillBeSent": "Localisation GPS sera envoyée",
+  "paymentOnDelivery": "Paiement à la livraison"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
+import '../../l10n/app_localizations.dart';
 
 class MenuManagementScreen extends StatefulWidget {
   const MenuManagementScreen({super.key});
@@ -53,6 +54,7 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
   }
 
   void _showForm({Map<String, dynamic>? plat}) {
+    final l10n = AppLocalizations.of(context)!;
     final nomCtrl = TextEditingController(text: plat?['nom'] ?? '');
     final descCtrl = TextEditingController(text: plat?['description'] ?? '');
     final prixCtrl = TextEditingController(text: plat?['prix']?.toString() ?? '');
@@ -74,7 +76,7 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(plat == null ? 'Ajouter un plat' : 'Modifier le plat',
+                Text(plat == null ? l10n.addDish : l10n.editDish,
                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 16),
                 // Image picker
@@ -135,27 +137,27 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                                       ),
                                     ),
                                   ])
-                                : const Column(
+                                : Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.add_photo_alternate,
+                                      const Icon(Icons.add_photo_alternate,
                                           color: Colors.orange, size: 50),
-                                      SizedBox(height: 8),
-                                      Text('Appuyer pour choisir une image',
-                                          style: TextStyle(color: Colors.orange)),
+                                      const SizedBox(height: 8),
+                                      Text(l10n.tapToChooseImage,
+                                          style: const TextStyle(color: Colors.orange)),
                                     ],
                                   ),
                   ),
                 ),
                 const SizedBox(height: 12),
                 TextField(controller: nomCtrl,
-                    decoration: const InputDecoration(labelText: 'Nom du plat', border: OutlineInputBorder())),
+                    decoration: InputDecoration(labelText: l10n.dishName, border: const OutlineInputBorder())),
                 const SizedBox(height: 12),
                 TextField(controller: descCtrl,
-                    decoration: const InputDecoration(labelText: 'Description', border: OutlineInputBorder())),
+                    decoration: InputDecoration(labelText: l10n.description, border: const OutlineInputBorder())),
                 const SizedBox(height: 12),
                 TextField(controller: prixCtrl, keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Prix (DA)', border: OutlineInputBorder())),
+                    decoration: InputDecoration(labelText: l10n.priceDA, border: const OutlineInputBorder())),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
@@ -179,7 +181,7 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                       if (context.mounted) Navigator.pop(context);
                       _fetchPlats();
                     },
-                    child: Text(plat == null ? 'Ajouter' : 'Modifier',
+                    child: Text(plat == null ? l10n.add : l10n.edit,
                         style: const TextStyle(color: Colors.white, fontSize: 16)),
                   ),
                 ),
@@ -194,9 +196,10 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gestion du menu'),
+        title: Text(l10n.menuManagement),
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
@@ -208,7 +211,7 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : plats.isEmpty
-              ? const Center(child: Text('Aucun plat — ajoutez-en !'))
+              ? Center(child: Text(l10n.noDishesAddSome))
               : ListView.builder(
                   padding: const EdgeInsets.all(12),
                   itemCount: plats.length,
@@ -256,15 +259,15 @@ class _MenuManagementScreenState extends State<MenuManagementScreen> {
                               onPressed: () => showDialog(
                                 context: context,
                                 builder: (_) => AlertDialog(
-                                  title: const Text('Supprimer ?'),
-                                  content: Text('Supprimer "${plat['nom']}" ?'),
+                                  title: Text(l10n.deleteQuestion),
+                                  content: Text(l10n.deleteConfirm(plat['nom'])),
                                   actions: [
                                     TextButton(onPressed: () => Navigator.pop(context),
-                                        child: const Text('Annuler')),
+                                        child: Text(l10n.cancel)),
                                     TextButton(
                                         onPressed: () { Navigator.pop(context); _deletePlat(plat['id']); },
-                                        child: const Text('Supprimer',
-                                            style: TextStyle(color: Colors.red))),
+                                        child: Text(l10n.delete,
+                                            style: const TextStyle(color: Colors.red))),
                                   ],
                                 ),
                               ),

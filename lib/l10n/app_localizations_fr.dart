@@ -121,4 +121,155 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get accountCreated => 'Compte créé ! Connectez-vous.';
+
+  @override
+  String get addDish => 'Ajouter un plat';
+
+  @override
+  String get editDish => 'Modifier le plat';
+
+  @override
+  String get tapToChooseImage => 'Appuyer pour choisir une image';
+
+  @override
+  String get dishName => 'Nom du plat';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get priceDA => 'Prix (DA)';
+
+  @override
+  String get add => 'Ajouter';
+
+  @override
+  String get edit => 'Modifier';
+
+  @override
+  String get menuManagement => 'Gestion du menu';
+
+  @override
+  String get noDishesAddSome => 'Aucun plat — ajoutez-en !';
+
+  @override
+  String get deleteQuestion => 'Supprimer ?';
+
+  @override
+  String deleteConfirm(String name) {
+    return 'Supprimer \"$name\" ?';
+  }
+
+  @override
+  String get delete => 'Supprimer';
+
+  @override
+  String get orderDetails => 'Détails Commande #';
+
+  @override
+  String get deliveryInformation => 'Informations de livraison';
+
+  @override
+  String get positionNotAvailable => 'Position non disponible';
+
+  @override
+  String get orderedItems => 'Articles commandés';
+
+  @override
+  String get noItems => 'Aucun article';
+
+  @override
+  String get unknownDish => 'Plat inconnu';
+
+  @override
+  String get quantity => 'Quantité:';
+
+  @override
+  String get history => 'Historique';
+
+  @override
+  String get pendingOrders => 'Commandes en attente';
+
+  @override
+  String get all => 'Toutes';
+
+  @override
+  String get accepted => 'Acceptées';
+
+  @override
+  String get refused => 'Refusées';
+
+  @override
+  String get noOrdersInHistory => 'Aucune commande';
+
+  @override
+  String get noPendingOrders => 'Aucune commande en attente';
+
+  @override
+  String get acceptedStatus => 'Acceptée';
+
+  @override
+  String get refusedStatus => 'Refusée';
+
+  @override
+  String get pendingStatus => 'En attente';
+
+  @override
+  String get unknown => 'Inconnu';
+
+  @override
+  String get gpsAvailable => 'GPS disponible';
+
+  @override
+  String get statistics => 'Statistiques';
+
+  @override
+  String get totalRevenue => 'Revenu total';
+
+  @override
+  String get totalOrders => 'Total commandes';
+
+  @override
+  String get dashboardRestaurant => 'Dashboard Restaurant';
+
+  @override
+  String get welcome => 'Bienvenue !';
+
+  @override
+  String get restaurant => 'Restaurant';
+
+  @override
+  String get pending => 'En attente';
+
+  @override
+  String get acceptedOrders => 'Acceptées';
+
+  @override
+  String get orderHistory => 'Historique des commandes';
+
+  @override
+  String get acceptedAndRefused => 'Acceptées et refusées';
+
+  @override
+  String get manageMenu => 'Gestion du menu';
+
+  @override
+  String get addEditDeleteDishes => 'Ajouter, modifier, supprimer des plats';
+
+  @override
+  String get revenueAndOrders => 'Revenus et commandes';
+
+  @override
+  String newOrders(String count) {
+    return '$count nouvelle(s) commande(s)';
+  }
+
+  @override
+  String get noDishAvailable => 'Aucun plat disponible';
+
+  @override
+  String get gpsLocationWillBeSent => 'Localisation GPS sera envoyée';
+
+  @override
+  String get paymentOnDelivery => 'Paiement à la livraison';
 }

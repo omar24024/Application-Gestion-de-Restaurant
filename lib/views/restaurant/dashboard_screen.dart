@@ -37,7 +37,7 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard Restaurant'),
+        title: Text(l10n.dashboardRestaurant),
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
         automaticallyImplyLeading: false,
@@ -93,9 +93,9 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Bienvenue !',
+                      Text(l10n.welcome,
                           style: TextStyle(color: Colors.orange.shade700, fontSize: 13)),
-                      Text(auth.userName ?? 'Restaurant',
+                      Text(auth.userName ?? l10n.restaurant,
                           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                     ],
                   ),
@@ -107,14 +107,14 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
               children: [
                 Expanded(child: _StatCard(
                   icon: Icons.pending_actions,
-                  label: 'En attente',
+                  label: l10n.pending,
                   value: '$_pendingCount',
                   color: Colors.orange,
                 )),
                 const SizedBox(width: 12),
                 Expanded(child: _StatCard(
                   icon: Icons.check_circle,
-                  label: 'Acceptées',
+                  label: l10n.acceptedOrders,
                   value: '—',
                   color: Colors.green,
                 )),
@@ -125,8 +125,8 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
             _MenuCard(
               icon: Icons.pending_actions,
               color: Colors.orange,
-              title: 'Commandes en attente',
-              subtitle: '$_pendingCount nouvelle(s) commande(s)',
+              title: l10n.pendingOrders,
+              subtitle: l10n.newOrders('$_pendingCount'),
               badge: _pendingCount > 0 ? '$_pendingCount' : null,
               onTap: () => Navigator.push(context, MaterialPageRoute(
                   builder: (_) => const RestaurantOrdersScreen(isHistory: false))),
@@ -136,8 +136,8 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
             _MenuCard(
               icon: Icons.history,
               color: Colors.green,
-              title: 'Historique des commandes',
-              subtitle: 'Acceptées et refusées',
+              title: l10n.orderHistory,
+              subtitle: l10n.acceptedAndRefused,
               onTap: () => Navigator.push(context, MaterialPageRoute(
                   builder: (_) => const RestaurantOrdersScreen(isHistory: true))),
             ),
@@ -145,8 +145,8 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
             _MenuCard(
               icon: Icons.fastfood,
               color: Colors.blue,
-              title: 'Gestion du menu',
-              subtitle: 'Ajouter, modifier, supprimer des plats',
+              title: l10n.manageMenu,
+              subtitle: l10n.addEditDeleteDishes,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const MenuManagementScreen())),
             ),
@@ -154,8 +154,8 @@ class _RestaurantDashboardScreenState extends State<RestaurantDashboardScreen> {
             _MenuCard(
               icon: Icons.bar_chart,
               color: Colors.purple,
-              title: 'Statistiques',
-              subtitle: 'Revenus et commandes',
+              title: l10n.statistics,
+              subtitle: l10n.revenueAndOrders,
               onTap: () => Navigator.push(context,
                   MaterialPageRoute(builder: (_) => const StatsScreen())),
             ),

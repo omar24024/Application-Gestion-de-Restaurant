@@ -63,15 +63,15 @@ class _CartScreenState extends State<CartScreen> {
               ],
             ),
             const SizedBox(height: 8),
-            const Row(children: [
-              Icon(Icons.location_on, color: Colors.orange, size: 16),
-              SizedBox(width: 4),
-              Text('Localisation GPS sera envoyée', style: TextStyle(fontSize: 12, color: Colors.grey)),
+            Row(children: [
+              const Icon(Icons.location_on, color: Colors.orange, size: 16),
+              const SizedBox(width: 4),
+              Text(l10n.gpsLocationWillBeSent, style: const TextStyle(fontSize: 12, color: Colors.grey)),
             ]),
-            const Row(children: [
-              Icon(Icons.payments, color: Colors.orange, size: 16),
-              SizedBox(width: 4),
-              Text('Paiement à la livraison', style: TextStyle(fontSize: 12, color: Colors.grey)),
+            Row(children: [
+              const Icon(Icons.payments, color: Colors.orange, size: 16),
+              const SizedBox(width: 4),
+              Text(l10n.paymentOnDelivery, style: const TextStyle(fontSize: 12, color: Colors.grey)),
             ]),
           ],
         ),
@@ -120,13 +120,13 @@ class _CartScreenState extends State<CartScreen> {
                   style: const TextStyle(color: Colors.grey)),
               if (position != null) ...[
                 const SizedBox(height: 8),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.location_on, color: Colors.green, size: 16),
-                    SizedBox(width: 4),
-                    Text('Localisation envoyée ✅',
-                        style: TextStyle(color: Colors.green, fontSize: 12)),
+                    const Icon(Icons.location_on, color: Colors.green, size: 16),
+                    const SizedBox(width: 4),
+                    Text(l10n.locationSent,
+                        style: const TextStyle(color: Colors.green, fontSize: 12)),
                   ],
                 ),
               ],
@@ -221,11 +221,11 @@ class _CartScreenState extends State<CartScreen> {
                         ],
                       ),
                       const SizedBox(height: 8),
-                      const Row(children: [
-                        Icon(Icons.payments, color: Colors.grey, size: 16),
-                        SizedBox(width: 4),
-                        Text('Paiement à la livraison',
-                            style: TextStyle(color: Colors.grey, fontSize: 12)),
+                      Row(children: [
+                        const Icon(Icons.payments, color: Colors.grey, size: 16),
+                        const SizedBox(width: 4),
+                        Text(l10n.paymentOnDelivery,
+                            style: const TextStyle(color: Colors.grey, fontSize: 12)),
                       ]),
                       const SizedBox(height: 12),
                       SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'order_details_screen.dart';
+import '../../l10n/app_localizations.dart';
 
 class RestaurantOrdersScreen extends StatefulWidget {
   final bool isHistory;
@@ -50,10 +51,11 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
   }
 
   String _statusLabel(String statut) {
+    final l10n = AppLocalizations.of(context)!;
     switch (statut) {
-      case 'acceptee': return 'Acceptée';
-      case 'refusee': return 'Refusée';
-      default: return 'En attente';
+      case 'acceptee': return l10n.acceptedStatus;
+      case 'refusee': return l10n.refusedStatus;
+      default: return l10n.pendingStatus;
     }
   }
 
@@ -68,9 +70,10 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isHistory ? 'Historique' : 'Commandes en attente'),
+        title: Text(widget.isHistory ? l10n.history : l10n.pendingOrders),
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
@@ -81,13 +84,13 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
               padding: const EdgeInsets.fromLTRB(12, 8, 12, 4),
               child: Row(
                 children: [
-                  _Chip(label: 'Toutes', value: 'all', current: _filter,
+                  _Chip(label: l10n.all, value: 'all', current: _filter,
                       onTap: () => setState(() => _filter = 'all')),
                   const SizedBox(width: 8),
-                  _Chip(label: 'Acceptées', value: 'acceptee', current: _filter,
+                  _Chip(label: l10n.accepted, value: 'acceptee', current: _filter,
                       onTap: () => setState(() => _filter = 'acceptee')),
                   const SizedBox(width: 8),
-                  _Chip(label: 'Refusées', value: 'refusee', current: _filter,
+                  _Chip(label: l10n.refused, value: 'refusee', current: _filter,
                       onTap: () => setState(() => _filter = 'refusee')),
                 ],
               ),
@@ -101,7 +104,7 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
                         Icon(Icons.receipt_long, size: 60,
                             color: widget.isHistory ? Colors.grey : Colors.orange),
                         const SizedBox(height: 12),
-                        Text(widget.isHistory ? 'Aucune commande' : 'Aucune commande en attente',
+                        Text(widget.isHistory ? l10n.noOrdersInHistory : l10n.noPendingOrders,
                             style: const TextStyle(color: Colors.grey, fontSize: 16)),
                       ],
                     ),
@@ -111,7 +114,7 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
                     itemCount: _filtered.length,
                     itemBuilder: (context, index) {
                       final cmd = _filtered[index];
-                      final email = cmd['client_email'] ?? 'Inconnu';
+                      final email = cmd['client_email'] ?? l10n.unknown;
                       return Card(
                         margin: const EdgeInsets.only(bottom: 10),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -166,10 +169,10 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
                                 Text('Total: ${cmd['total']} DA',
                                     style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
                                 if (cmd['latitude'] != null)
-                                  const Row(children: [
-                                    Icon(Icons.location_on, color: Colors.green, size: 14),
-                                    Text(' GPS disponible',
-                                        style: TextStyle(color: Colors.green, fontSize: 12)),
+                                  Row(children: [
+                                    const Icon(Icons.location_on, color: Colors.green, size: 14),
+                                    Text(' ${l10n.gpsAvailable}',
+                                        style: const TextStyle(color: Colors.green, fontSize: 12)),
                                   ]),
                                 if (cmd['statut'] == 'en_attente') ...[
                                   const SizedBox(height: 10),
@@ -179,7 +182,7 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
                                         child: ElevatedButton.icon(
                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                                           icon: const Icon(Icons.check, color: Colors.white),
-                                          label: const Text('Accepter', style: TextStyle(color: Colors.white)),
+                                          label: Text(l10n.accept, style: const TextStyle(color: Colors.white)),
                                           onPressed: () => _updateStatut(cmd['id'], 'acceptee'),
                                         ),
                                       ),
@@ -188,7 +191,7 @@ class _RestaurantOrdersScreenState extends State<RestaurantOrdersScreen> {
                                         child: ElevatedButton.icon(
                                           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                                           icon: const Icon(Icons.close, color: Colors.white),
-                                          label: const Text('Refuser', style: TextStyle(color: Colors.white)),
+                                          label: Text(l10n.refuse, style: const TextStyle(color: Colors.white)),
                                           onPressed: () => _updateStatut(cmd['id'], 'refusee'),
                                         ),
                                       ),

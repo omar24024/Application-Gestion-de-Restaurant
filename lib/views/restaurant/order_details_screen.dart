@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../l10n/app_localizations.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final int orderId;
@@ -47,9 +48,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Détails Commande #${widget.orderId}'),
+        title: Text('${l10n.orderDetails}${widget.orderId}'),
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
@@ -67,9 +69,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Informations de livraison',
-                            style: TextStyle(
+                          Text(
+                            l10n.deliveryInformation,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -87,18 +89,18 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                               ],
                             )
                           else
-                            const Text(
-                              'Position non disponible',
-                              style: TextStyle(color: Colors.grey),
+                            Text(
+                              l10n.positionNotAvailable,
+                              style: const TextStyle(color: Colors.grey),
                             ),
                         ],
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Articles commandés',
-                    style: TextStyle(
+                  Text(
+                    l10n.orderedItems,
+                    style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -106,7 +108,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   const SizedBox(height: 12),
                   Expanded(
                     child: items.isEmpty
-                        ? const Center(child: Text('Aucun article'))
+                        ? Center(child: Text(l10n.noItems))
                         : ListView.builder(
                             itemCount: items.length,
                             itemBuilder: (context, index) {
@@ -119,8 +121,8 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                     backgroundColor: Colors.orange,
                                     child: Icon(Icons.fastfood, color: Colors.white),
                                   ),
-                                  title: Text(plat['nom'] ?? 'Plat inconnu'),
-                                  subtitle: Text('Quantité: ${item['quantite']}'),
+                                  title: Text(plat['nom'] ?? l10n.unknownDish),
+                                  subtitle: Text('${l10n.quantity} ${item['quantite']}'),
                                   trailing: Text(
                                     '${(plat['prix'] as num).toDouble().toStringAsFixed(0)} DA',
                                     style: const TextStyle(
@@ -141,9 +143,9 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            'Total',
-                            style: TextStyle(
+                          Text(
+                            l10n.total,
+                            style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),

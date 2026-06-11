@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../../l10n/app_localizations.dart';
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -44,9 +45,10 @@ class _StatsScreenState extends State<StatsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Statistiques'),
+        title: Text(l10n.statistics),
         backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
@@ -70,7 +72,7 @@ class _StatsScreenState extends State<StatsScreen> {
                         const SizedBox(height: 8),
                         Text('${totalRevenu.toStringAsFixed(0)} DA',
                             style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold)),
-                        const Text('Revenu total', style: TextStyle(color: Colors.white70, fontSize: 14)),
+                        Text(l10n.totalRevenue, style: const TextStyle(color: Colors.white70, fontSize: 14)),
                       ],
                     ),
                   ),
@@ -83,10 +85,10 @@ class _StatsScreenState extends State<StatsScreen> {
                     mainAxisSpacing: 12,
                     childAspectRatio: 1.4,
                     children: [
-                      _StatCard(label: 'Total commandes', value: '$totalCommandes', color: Colors.blue, icon: Icons.receipt_long),
-                      _StatCard(label: 'Acceptées', value: '$commandesAcceptees', color: Colors.green, icon: Icons.check_circle),
-                      _StatCard(label: 'Refusées', value: '$commandesRefusees', color: Colors.red, icon: Icons.cancel),
-                      _StatCard(label: 'En attente', value: '$commandesEnAttente', color: Colors.orange, icon: Icons.hourglass_empty),
+                      _StatCard(label: l10n.totalOrders, value: '$totalCommandes', color: Colors.blue, icon: Icons.receipt_long),
+                      _StatCard(label: l10n.acceptedOrders, value: '$commandesAcceptees', color: Colors.green, icon: Icons.check_circle),
+                      _StatCard(label: l10n.refused, value: '$commandesRefusees', color: Colors.red, icon: Icons.cancel),
+                      _StatCard(label: l10n.pending, value: '$commandesEnAttente', color: Colors.orange, icon: Icons.hourglass_empty),
                     ],
                   ),
                 ],

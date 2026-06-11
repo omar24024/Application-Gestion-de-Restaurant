@@ -91,7 +91,7 @@ class _MenuScreenState extends State<MenuScreen> {
       body: platCtrl.isLoading
           ? const Center(child: CircularProgressIndicator())
           : platCtrl.plats.isEmpty
-              ? const Center(child: Text('Aucun plat disponible'))
+              ? Center(child: Text(l10n.noDishAvailable))
               : GridView.builder(
                   padding: const EdgeInsets.all(12),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -116,6 +116,7 @@ class PlatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cmdCtrl = context.read<CommandeController>();
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -154,7 +155,7 @@ class PlatCard extends StatelessWidget {
                       onTap: () {
                         cmdCtrl.ajouterAuPanier(plat);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('${plat.nom} ajouté !'),
+                          content: Text('${plat.nom} ${l10n.added}'),
                           duration: const Duration(seconds: 1),
                         ));
                       },

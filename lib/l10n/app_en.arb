@@ -37,5 +37,68 @@
   "locationNotAvailable": "GPS not available",
   "payOnDelivery": "Pay on delivery",
   "gpsSent": "GPS will be sent",
-  "accountCreated": "Account created! Please login."
+  "accountCreated": "Account created! Please login.",
+  "addDish": "Add a dish",
+  "editDish": "Edit dish",
+  "tapToChooseImage": "Tap to choose an image",
+  "dishName": "Dish name",
+  "description": "Description",
+  "priceDA": "Price (DA)",
+  "add": "Add",
+  "edit": "Edit",
+  "menuManagement": "Menu management",
+  "noDishesAddSome": "No dishes — add some!",
+  "deleteQuestion": "Delete?",
+  "deleteConfirm": "Delete \"{name}\"?",
+  "@deleteConfirm": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "delete": "Delete",
+  "orderDetails": "Order Details #",
+  "deliveryInformation": "Delivery information",
+  "positionNotAvailable": "Position not available",
+  "orderedItems": "Ordered items",
+  "noItems": "No items",
+  "unknownDish": "Unknown dish",
+  "quantity": "Quantity:",
+  "history": "History",
+  "pendingOrders": "Pending orders",
+  "all": "All",
+  "accepted": "Accepted",
+  "refused": "Refused",
+  "noOrdersInHistory": "No orders",
+  "noPendingOrders": "No pending orders",
+  "acceptedStatus": "Accepted",
+  "refusedStatus": "Refused",
+  "pendingStatus": "Pending",
+  "unknown": "Unknown",
+  "gpsAvailable": "GPS available",
+  "statistics": "Statistics",
+  "totalRevenue": "Total revenue",
+  "totalOrders": "Total orders",
+  "dashboardRestaurant": "Restaurant Dashboard",
+  "welcome": "Welcome!",
+  "restaurant": "Restaurant",
+  "pending": "Pending",
+  "acceptedOrders": "Accepted orders",
+  "orderHistory": "Order history",
+  "acceptedAndRefused": "Accepted and refused",
+  "manageMenu": "Manage menu",
+  "addEditDeleteDishes": "Add, edit, delete dishes",
+  "revenueAndOrders": "Revenue and orders",
+  "newOrders": "{count} new order(s)",
+  "@newOrders": {
+    "placeholders": {
+      "count": {
+        "type": "String"
+      }
+    }
+  },
+  "noDishAvailable": "No dishes available",
+  "gpsLocationWillBeSent": "GPS location will be sent",
+  "paymentOnDelivery": "Payment on delivery"
 }
